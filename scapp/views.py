@@ -120,6 +120,14 @@ def submit(login=None):
 
         target_profile = profiles.get_profile_by_name(chosen_person)
 
+        if chosen_goals == []:
+            flash("You have to select at least one goal to submit!")
+            return redirect(url_for('profile', uid=login["id"]))
+
+        if chosen_person == profile["name"]:
+            flash("Sorry but you cannot select yourself!")
+            return redirect(url_for('profile', uid=login["id"]))
+
         if chosen_person not in persons:
             flash("Sorry but the person you selected does not exist!")
             return redirect(url_for('profile', uid=login["id"]))
