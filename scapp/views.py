@@ -187,6 +187,15 @@ def invite(name=None, login=None):
 @app.route('/unsubmit/<string:eid>/')
 @login_required
 def unsubmit(eid=None, login=None):
+    recurse.fetch_batches_if_outdated()
+
+    profile = profiles.get_profile_by_uid(login["id"])
+
+    # TODO: Check submitter ID
+
+    goals = events.get_goals_by_eid(eid)
+    profiles.set_goals(login["id"], goals, 0)
+    events.remove_by_eid(eid)
 
     flash("Record was unsubmitted!")
     return redirect(url_for('profile', uid=login["id"]))
