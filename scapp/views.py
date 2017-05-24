@@ -82,9 +82,10 @@ def profile(uid=None, login=None):
     if profile is None:
         return '<h1>Profile with id: %d has not been created!</h1>' % uid
 
-    profile["score"] = 0
-    profile["position"] = 0
-    profile["level"] = ""
+    scores = profiles.get_scores()
+    profile["score"] = profiles.get_scores(uid)[0]["score"]
+    profile["position"] = [i for i, j in enumerate(scores) if j["_id"] == uid][0] + 1
+    profile["level"] = models.get_level_by_score(profile["score"])
 
     return render_template('profile.html', login=login,
                                            profile=profile,
@@ -132,3 +133,20 @@ def submit(login=None):
                                           goals=models.goals,
                                           form=form,
                                           persons=persons)
+
+
+@app.route('/scoreboard')
+@login_required
+def scoreboard(login=None):
+    recurse.fetch_batches_if_outdated()
+
+    profile = profiles.get_profile_by_uid(login["id"])
+
+    score_data = profiles.get_scores()
+    for user in score_data:
+        user["profile"] = profiles.get_profile_by_uid(user["_id"])
+        user["level"] = models.get_level_by_score(user["score"])
+
+    return render_template('scoreboard.html', login=login,
+                                              profile=profile,
+                                              scoreboard=score_data)

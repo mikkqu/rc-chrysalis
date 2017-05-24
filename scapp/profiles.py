@@ -54,3 +54,27 @@ def set_goals(uid, goals, bit):
     updates["$set"] = {"goals.%s" % goal: bit for goal in goals}
 
     mongo.db.profiles.find_one_and_update(query, updates)
+
+
+def get_scores(uid=None, batch_ids=None):
+
+    filter = {}
+    if batch_ids is not None:
+        filter = { "$or": [ {"batch_id": uid } for uid in batch_ids ]}
+
+    if uid is not None:
+        filter = { "_id": uid }
+
+    cursor = mongo.db.profiles.aggregate([
+        { "$match": filter },
+        { "$project": {
+            "name": "$name",
+            "score": { "$sum": "$goals" } } },
+        { "$sort": { "score": -1 } },
+        { "$out": "scoreboard" }
+    ])
+
+    scores = mongo.db.scoreboard.find()
+    scores = list(scores)
+
+    return scores
