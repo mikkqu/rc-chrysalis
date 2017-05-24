@@ -5,6 +5,7 @@ from . import models
 from . import profiles
 from . import forms
 from . import recurse
+from . import events
 
 from .oauth import auth, get_login, login_required
 
@@ -87,9 +88,15 @@ def profile(uid=None, login=None):
     profile["position"] = [i for i, j in enumerate(scores) if j["_id"] == uid][0] + 1
     profile["level"] = models.get_level_by_score(profile["score"])
 
+    event_list = events.get_events(uid)
+    for event in event_list:
+        event["goals_list"] = ["%s" % models.goals[int(id)] for id in event["goals_list"]]
+        event["target_profile"] = profiles.get_profile_by_name(event["target_name"])
+
     return render_template('profile.html', login=login,
                                            profile=profile,
-                                           goals=models.goals)
+                                           goals=models.goals,
+                                           events=event_list)
 
 
 @app.route('/submit', methods=["GET", "POST"])
@@ -122,6 +129,13 @@ def submit(login=None):
         else:
             target_profile_id = target_profile["_id"]
 
+        event = events.init_event(events.pair,
+                                  login["id"],
+                                  target_profile_id,
+                                  chosen_person,
+                                  chosen_goals)
+        events.create(event)
+
         profiles.set_goals(login["id"], chosen_goals, 1)
 
         flash("Your request was processed!")
@@ -150,3 +164,24 @@ def scoreboard(login=None):
     return render_template('scoreboard.html', login=login,
                                               profile=profile,
                                               scoreboard=score_data)
+
+
+@app.route('/invite/<string:name>/')
+@login_required
+def invite(name=None, login=None):
+    recurse.fetch_batches_if_outdated()
+
+    profile = recurse.get_by_name(name)
+
+    return '<h1>This module is in development phase</h1>' \
+           '<h3>Recognize him? This user has not registered yet.</h3>' \
+           '<img src="{}">' \
+           '<h3>Tell him to join in! <a href="mailto:{}">{}</a></h3>'.format(profile["image"], profile["email"], profile["email"])
+
+
+@app.route('/unsubmit/<string:eid>/')
+@login_required
+def unsubmit(eid=None, login=None):
+
+    flash("Record was unsubmitted!")
+    return redirect(url_for('profile', uid=login["id"]))

@@ -62,3 +62,13 @@ def get():
     recursers = list(recursers)
 
     return recursers
+
+def get_by_name(name):
+    first_name, last_name = name.split()
+
+    recurser = mongo.db.recursers.find_one( {
+        "$and": [ { "first_name": first_name },
+                  { "last_name": last_name } ]
+    } )
+
+    return recurser
