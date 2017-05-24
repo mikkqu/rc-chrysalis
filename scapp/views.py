@@ -171,6 +171,24 @@ def scoreboard(login=None):
                                               scoreboard=score_data)
 
 
+@app.route('/feed')
+@login_required
+def feed(login=None):
+    recurse.fetch_batches_if_outdated()
+
+    profile = profiles.get_profile_by_uid(login["id"])
+
+    event_list = events.get_events()
+    for event in event_list:
+        event["goals_list"] = ["%s" % models.goals[int(id)] for id in event["goals_list"]]
+        event["target_profile"] = profiles.get_profile_by_name(event["target_name"])
+
+    return render_template('feed.html', login=login,
+                                        goals=models.goals,
+                                        profile=profile,
+                                        events=event_list)
+
+
 @app.route('/invite/<string:name>/')
 @login_required
 def invite(name=None, login=None):
