@@ -217,3 +217,14 @@ def unsubmit(eid=None, login=None):
 
     flash("Record was unsubmitted!")
     return redirect(url_for('profile', uid=login["id"]))
+
+
+@app.route('/update_batches')
+@login_required
+def update_batches(login=None):
+    recurse.fetch_batches_if_outdated()
+
+    recursers = recurse.get()
+
+    flash("Batch info was updated! Persons fetched: {}".format(len(recursers)))
+    return redirect(url_for('profile', uid=login["id"]))
