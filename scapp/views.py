@@ -3,7 +3,7 @@ from flask import Flask, session, url_for, flash, redirect, request, render_temp
 from . import app
 from . import models
 from . import profiles
-
+from . import recurse
 
 from .oauth import auth, get_login, login_required
 
@@ -71,6 +71,8 @@ def index():
 @app.route('/profile/')
 @login_required
 def profile(login=None):
+    recurse.fetch_batches_if_outdated()
+
     uid=login["id"]
 
     profile = profiles.get_profile_by_uid(uid)
