@@ -124,6 +124,11 @@ def submit(login=None):
             flash("Sorry but the person you selected does not exist!")
             return redirect(url_for('profile', uid=login["id"]))
 
+        buddies = events.get_buddies_by_uid(login["id"])
+        if chosen_person in buddies:
+            flash("You cannot submit the same person more than once!")
+            return redirect(url_for('profile', uid=login["id"]))
+
         if target_profile is None:
             target_profile_id = None
         else:
