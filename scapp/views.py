@@ -228,3 +228,11 @@ def update_batches(login=None):
 
     flash("Batch info was updated! Persons fetched: {}".format(len(recursers)))
     return redirect(url_for('profile', uid=login["id"]))
+
+
+@app.before_request
+def before_request():
+    if request.url.startswith('https://'):
+        url = request.url.replace('https://', 'http://', 1)
+        code = 301
+        return redirect(url, code=code)
