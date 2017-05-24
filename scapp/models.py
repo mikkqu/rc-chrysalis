@@ -2,16 +2,19 @@ goals = [
     "is 10 years younger or older than you",
     "is writing code in a language you are unfamiliar with",
     "is writing code in a language you are familiar with",
-    "is studying a subfield of programming you are unfamiliar with",
-    "is studying a subfield of programming you are familiar with",
-    "is beginning to learn about something you have experience with",
-    "is international (not American)",
-    "is American (not New Yorker)",
-    "is New Yorker",
+    "works in a subfield of programming you are unfamiliar with",
+    "works in a subfield of programming you are familiar with",
+    "is learning about something you have experience with",
+    "is learning about something you don't have experience with",
+    "is not from the Americas",
+    "is from the Americas",
+    "is from the US",
+    "is a New Yorker",
     "is working in an OOP framework",
     "is working in a functional framework",
     "is from academia",
-    "is from industry",
+    "worked for a large company",
+    "worked for a startup",
     "is in a different batch",
     "does not have a CS undergrad",
     "has never worked as a programmer",
@@ -28,26 +31,15 @@ levels = [
     "Larva",
     "Caterpillar",
     "Cocoon",
-    "Hatching butterfly",
-    "Wet butterfly",
-    "Glory butterfly",
+    "Hatchling butterfly",
+    "Butterfly in bloom",
     "Social butterfly"
 ]
 
 def get_level_by_score(score):
-    if score in range(0, 3):
-        return levels[0]
-    elif score in range(3, 7):
-        return levels[1]
-    elif score in range (7, 11):
-        return levels[2]
-    elif score in range(11, 14):
-        return levels[3]
-    elif score in range (14, 17):
-        return levels[4]
-    elif score in range(17, 19):
-        return levels[5]
-    elif score in range(19, 21):
-        return levels[6]
-    elif score == 22:
-        return levels[7]
+    for i, level in enumerate(levels):
+        upper_bound = len(goals) * i / (len(levels) - 1)
+        print("i {} ub {}".format(i, upper_bound))
+
+        if score <= upper_bound:
+            return level
