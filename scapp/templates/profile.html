@@ -110,7 +110,7 @@
                   <h6>{{ event.source_profile.name }}</h6>
                 </div>
                 <p>
-                  Worked together with
+                  {% if event.work_type == '0' %} Worked {% else %} Paired {% endif %} together with
                     {% if event.target_profile %}
                       <a href="{{ url_for('profile', uid=event.target_profile._id) }}">
                         <b>{{ event.target_name }}</b>
@@ -129,7 +129,7 @@
                         ,
                       {%- endif %}
                     {%- endfor -%}
-                  .
+                  . {{ event.details }}
                 </p>
                 <small class="float-right text-muted delete-link">
                   <a class="text-inherit" href="{{ url_for('unsubmit', eid=event._id) }}"><u>Delete</u></a>

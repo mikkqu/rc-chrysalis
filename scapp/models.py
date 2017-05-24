@@ -36,6 +36,11 @@ levels = [
     "Social butterfly"
 ]
 
+worktypes = [
+    "I shared a desk with",
+    "I paired with"
+]
+
 def get_level_by_score(score):
     for i, level in enumerate(levels):
         upper_bound = len(goals) * i / (len(levels) - 1)

@@ -117,6 +117,8 @@ def submit(login=None):
     if request.method == 'POST' and form.validate():
         chosen_goals = form.goals_mcheckbox.data
         chosen_person = form.person_text.data
+        chosen_worktype = form.worktype_radio.data
+        chosen_details = form.detail_text.data
 
         target_profile = profiles.get_profile_by_name(chosen_person)
 
@@ -146,7 +148,9 @@ def submit(login=None):
                                   login["id"],
                                   target_profile_id,
                                   chosen_person,
-                                  chosen_goals)
+                                  chosen_goals,
+                                  chosen_worktype,
+                                  chosen_details)
         events.create(event)
 
         profiles.set_goals(login["id"], chosen_goals, 1)

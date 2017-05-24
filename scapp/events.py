@@ -10,13 +10,15 @@ levelup = 5
 score = 6
 
 
-def init_event(event_type, source_id=None, target_id=None, target_name=None, goals_list=None):
+def init_event(event_type, source_id=None, target_id=None, target_name=None, goals_list=None, work_type=None, details=None):
     event = {
         "event_type": event_type,
         "date": None,
         "source_profile": profiles.get_profile_by_uid(source_id),
         "target_profile": profiles.get_profile_by_uid(target_id),
-        "target_name": target_name
+        "target_name": target_name,
+        "work_type": work_type,
+        "details": details
     }
 
     if goals_list is not None:

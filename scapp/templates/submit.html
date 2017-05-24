@@ -11,11 +11,21 @@
       <div class="col-lg-6 col-centered">
         <div class="card visible-md-block visible-lg-block mb-4">
           <div class="card-block">
-            <h6 class="mb-4">Worked with</h6>
+            <h6 class="mb-4">Record an encounter</h6>
+
+
 
             <form action="" method="post" name="goals">
             {{ form.hidden_tag() }}
 
+            {{ form.worktype_radio(class="work-type") }}
+
+            {{ form.person_text(id="person-text",
+                    class="text-field mb-3",
+                    list="datalist",
+                    placeholder="Select a person") }}
+
+            <br>
             <ul id="goals_mcheckbox">
             {%  for value, label, selected in form.goals_mcheckbox.iter_choices() %}
             <li>
@@ -38,11 +48,9 @@
             {% endfor %}
             </datalist>
 
+            {{ form.detail_text(cols=70, rows=3, class="mb-3",
+                                placeholder="Tell about your experience (optional)") }}
             <p>
-            {{ form.person_text(id="person-text",
-                                class="text-field",
-                                list="datalist",
-                                placeholder="Select a person") }}
             {{ form.submit_button }}
             </p>
             </form>
