@@ -1,0 +1,162 @@
+{% extends "_base.html" %}
+
+{% set active_page = "profile" %}
+
+{% block browsertitle %} - Profile{% endblock %}
+
+{% block content %}
+
+  <div class="main">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-dismissible" role="alert">
+        {% for message in messages %}
+          <h3 class="text-center text-flash mt-5">{{ message }}
+            <button type="button" class="close text-flash-close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </h3>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="card card-profile mb-4 mt-5">
+
+          <div class="card-block text-center">
+            <a href="{{ url_for('index') }}">
+              <img class="card-profile-img" src="{{ profile.image }}">
+            </a>
+
+            <h6 class="card-title mt-3">
+              <a class="text-inherit" href="{{ url_for('index') }}">{{ profile.name }}</a>
+            </h6>
+
+            <p class="mb-4"><b>Level: </b>{{ profile.level }}</p>
+            <p class="mb-4">{{ profile.interests | truncate(length=180) }}</p>
+
+            <ul class="card-menu">
+              <li class="card-menu-item">
+                <a href="" class="text-inherit" data-toggle="modal">
+                  Score
+                  {% if profile.position < 4 %}
+                  <h6 class="my-0 text-success">{{ profile.score }}</h6>
+                  {% else %}
+                  <h6 class="my-0 text-danger">{{ profile.score }}</h6>
+                  {% endif %}
+                </a>
+              </li>
+
+              <li class="card-menu-item">
+                <a href="" class="text-inherit" data-toggle="modal">
+                  Place
+                  {% if profile.position < 4 %}
+                  <h6 class="my-0 text-success">#{{ profile.position }}</h6>
+                  {% else %}
+                  <h6 class="my-0 text-danger">#{{ profile.position }}</h6>
+                  {% endif %}
+                </a>
+              </li>
+            </ul>
+
+            <hr>
+
+            <div class="text-left mt-4">
+              <ul class="list-unstyled list-spaced">
+                <li><span class="text-muted icon icon-location-pin mr-2 text-success"></span>
+                  From <a href="https://www.google.com/search?q={{ profile.location }}">{{ profile.location }}</a>
+                <li><span class="text-muted icon icon-briefcase mr-2 text-danger"></span>
+                  Works at <a href="https://www.google.com/search?q={{ profile.job }}">{{ profile.job }}</a>
+                <li><span class="text-muted icon icon-github mr-2 text-warning"></span>
+                  Code to <a href="https://github.com/{{ profile.github }}">Github</a>
+                <li><span class="text-muted icon icon-twitter mr-2 text-primary"></span>
+                  Posts to <a href="https://twitter.com/{{ profile.twitter }}">Twitter</a>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card visible-md-block visible-lg-block mb-4">
+          <div class="card-block">
+            <h6 class="mb-4 ml-1">Goals</h6>
+            <ul class="list-unstyled list-spaced">
+              {% for goal in goals %}
+                {% if profile.goals[loop.index0] == 0 %}
+                  <li><span class="text-muted icon icon-arrow-right text-success mr-2"></span>{{ goal }}
+                {% else %}
+                  <li><span class="text-muted icon icon-arrow-left text-danger mr-2"></span><s><b>{{ goal }}</b></s>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+         </div>
+      </div>
+
+      <div class="col-lg-7">
+        <ul class="list-group media-list media-list-stream mb-4">
+
+          {% if events %}
+            {% for event in events[:20] | reverse %}
+            <li class="media list-group-item p-4">
+              <img class="media-object d-flex align-self-start mr-3"
+                src="{{ event.source_profile.image }}">
+              <div class="media-body">
+                <div class="">
+                  <small class="float-right text-muted">{{ loop.index }} days ago</small>
+                  <h6>{{ event.source_profile.name }}</h6>
+                </div>
+                <p>
+                  Worked together with
+                    {% if event.target_profile %}
+                      <a href="{{ url_for('profile', uid=event.target_profile._id) }}">
+                        <b>{{ event.target_name }}</b>
+                      </a>
+                    {% else %}
+                      <a href="{{ url_for('invite', name=event.target_name) }}" class="text-danger">
+                        <b>{{ event.target_name }}</b>
+                      </a>
+                    {% endif %}
+                  who
+                    {% for goal in event.goals_list %}
+                      <b>{{- goal -}}</b>
+                      {%- if loop.index == loop.length - 1 %}
+                        and
+                      {%- elif loop.index < loop.length -%}
+                        ,
+                      {%- endif %}
+                    {%- endfor -%}
+                  .
+                </p>
+                <small class="float-right text-muted delete-link">
+                  <a class="text-inherit" href="{{ url_for('unsubmit', eid=event._id) }}"><u>Delete</u></a>
+                </small>
+              </div>
+            </li>
+            {% endfor %}
+          {% else %}
+            <li class="media list-group-item p-4">
+              <img
+                class="media-object d-flex align-self-start mr-3"
+                src="{{ profile.image }}">
+              <div class="media-body">
+                <div class="media-heading">
+                  <small class="float-right text-muted">Right now</small>
+                  <h6>{{ profile.name }}</h6>
+                </div>
+                <p>
+                  There are no records so far.
+                </p>
+              </div>
+            </li>
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

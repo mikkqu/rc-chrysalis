@@ -5,7 +5,12 @@
   </head>
 
   <body>
+    {% include "_navbar.html" %}
+
     {% block content %}
     {% endblock %}
+
+    {% include "_footer.html" %}
+    {% include "_javascript.html" %}
   <body>
 </html>
