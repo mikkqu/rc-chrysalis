@@ -68,12 +68,14 @@ def index():
         return render_template('index.html', profile=None)
 
 
+@app.route('/profile/<int:uid>/')
 @app.route('/profile/')
 @login_required
-def profile(login=None):
+def profile(uid=None, login=None):
     recurse.fetch_batches_if_outdated()
 
-    uid=login["id"]
+    if uid is None:
+        uid=login["id"]
 
     profile = profiles.get_profile_by_uid(uid)
     if profile is None:
@@ -86,3 +88,6 @@ def profile(login=None):
     return render_template('profile.html', login=login,
                                            profile=profile,
                                            goals=models.goals)
+
+
+
