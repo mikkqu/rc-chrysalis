@@ -76,6 +76,61 @@ img.icon {
   .index-header h1 { font-size: 60px; }
 }
 
+/* Forms */
+
+form {
+  margin-left: 24px;
+}
+
+form ul {
+  list-style: none;
+  padding: 0;
+}
+
+label {
+  display: inline-block;
+  font-weight: 300;
+  margin-bottom: 3px;
+  margin-left: 5px;
+}
+
+.datalist {
+  list-style: none;
+  display: none;
+  background: white;
+  box-shadow: 0 2px 2px #999;
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.datalist:empty {
+  display: none !important;
+}
+
+.datalist li {
+  font-size: 1.0rem;
+  padding: 1px;
+  margin-left: 5px;
+}
+
+.datalist li.active {
+  background: #3875d7;
+  color: white;
+}
+
+.text-field {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-indent: 3px;
+  width: 250px;
+}
+
+.list-spaced li { margin-bottom: 5px; }
+.recursers { margin-bottom: 20px; }
+.recursers li { margin-bottom: 3px; }
+
 /* Navigation */
 
 .app-navbar {

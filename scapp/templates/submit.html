@@ -1,0 +1,90 @@
+{% extends "_base.html" %}
+
+{% set active_page = "submit" %}
+
+{% block browsertitle %} - Submit{% endblock %}
+
+{% block content %}
+
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-lg-6 col-centered">
+        <div class="card visible-md-block visible-lg-block mb-4">
+          <div class="card-block">
+            <h6 class="mb-4">Worked with</h6>
+
+            <form action="" method="post" name="goals">
+            {{ form.hidden_tag() }}
+
+            <ul id="goals_mcheckbox">
+            {%  for value, label, selected in form.goals_mcheckbox.iter_choices() %}
+            <li>
+              {% if profile.goals[loop.index0] == 0 %}
+                <input id="goals_mcheckbox-{{ loop.index0 }}" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
+                <label for="goals_mcheckbox-{{ loop.index0 }}">{{ label }}</label>
+              {% else %}
+                <input disabled="true" id="goals_mcheckbox-{{ loop.index0 }}" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
+                <label for="goals_mcheckbox-{{ loop.index0 }}"><s><b>{{ label }}</b></s></label>
+              {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+
+            <datalist id="datalist">
+            {% for entry in persons %}
+              {% if entry != profile.name %}
+                <option value="{{ entry }}">
+              {% endif %}
+            {% endfor %}
+            </datalist>
+
+            <p>
+            {{ form.person_text(id="person-text",
+                                class="text-field",
+                                list="datalist",
+                                placeholder="Select a person") }}
+            {{ form.submit_button }}
+            </p>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <!--
+      <div class="col-lg-6">
+        <div class="card visible-md-block visible-lg-block mb-4">
+          <div class="card-block">
+            <h6 class="mb-4">Invite them!</h6>
+
+            {% if profile.recursers %}
+              <ul class="recursers">
+              {% for recurser in profile.recursers %}
+                <li>
+                  <a href="{{ url_for('profile', uid=recurser.id, _external=True) }}">
+                    {{ recurser.first_name }} {{ recurser.last_name }}
+                  </a> - <img class="icon" src="{{ recurser.image }}">
+                </li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+      -->
+
+    </div>
+  </div>
+
+  <!-- Fallback scripts for input field -->
+  <script src="{{ url_for('static', filename='js/modernizr-custom.js') }}"></script>
+  <script>
+    yepnope({
+      test : (!Modernizr.input.list || (parseInt($.browser.version) > 400)),
+      yep : [
+        '{{ url_for('static', filename='js/relevant-dropdown.js') }}',
+      ]
+    });
+  </script>
+{% endblock %}

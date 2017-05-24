@@ -45,3 +45,12 @@ def get_profile_by_uid(uid):
 
 def get_profile_by_name(name):
     return mongo.db.profiles.find_one({"name": name})
+
+
+def set_goals(uid, goals, bit):
+    query = {"_id": uid}
+
+    updates = {}
+    updates["$set"] = {"goals.%s" % goal: bit for goal in goals}
+
+    mongo.db.profiles.find_one_and_update(query, updates)

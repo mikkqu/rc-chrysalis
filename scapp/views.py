@@ -3,6 +3,7 @@ from flask import Flask, session, url_for, flash, redirect, request, render_temp
 from . import app
 from . import models
 from . import profiles
+from . import forms
 from . import recurse
 
 from .oauth import auth, get_login, login_required
@@ -90,4 +91,44 @@ def profile(uid=None, login=None):
                                            goals=models.goals)
 
 
+@app.route('/submit', methods=["GET", "POST"])
+@login_required
+def submit(login=None):
+    recurse.fetch_batches_if_outdated()
+    recursers = recurse.get()
 
+    profile = profiles.get_profile_by_uid(login["id"])
+    profile["recursers_number"] = len(recursers)
+    profile["recursers"] = recursers
+
+    form = forms.GoalForm()
+
+    persons = [x["first_name"] + " " + x["last_name"] for x in recursers]
+    persons.sort()
+
+    if request.method == 'POST' and form.validate():
+        chosen_goals = form.goals_mcheckbox.data
+        chosen_person = form.person_text.data
+
+        target_profile = profiles.get_profile_by_name(chosen_person)
+
+        if chosen_person not in persons:
+            flash("Sorry but the person you selected does not exist!")
+            return redirect(url_for('profile', uid=login["id"]))
+
+        if target_profile is None:
+            target_profile_id = None
+        else:
+            target_profile_id = target_profile["_id"]
+
+        profiles.set_goals(login["id"], chosen_goals, 1)
+
+        flash("Your request was processed!")
+        return redirect(url_for('profile', uid=login["id"]))
+
+
+    return render_template('submit.html', login=login,
+                                          profile=profile,
+                                          goals=models.goals,
+                                          form=form,
+                                          persons=persons)

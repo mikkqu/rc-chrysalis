@@ -24,6 +24,9 @@
       <li class="nav-item {% if active_page == "profile" %}active{% endif %}">
         <a class="nav-link" href="{{ url_for('index') }}">{{ login.name }}</a>
       </li>
+      <li class="nav-item {% if active_page == "submit" %}active{% endif %}">
+        <a class="nav-link" href="{{ url_for('submit') }}">Submit</a>
+      </li>
       {% endif %}
     </ul>
 
