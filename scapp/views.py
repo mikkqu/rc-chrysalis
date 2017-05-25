@@ -126,6 +126,10 @@ def submit(login=None):
             flash("You have to select at least one goal to submit!")
             return redirect(url_for('profile', uid=login["id"]))
 
+        if len(chosen_goals) > 3:
+            flash("You can't select more than three goals for submission!")
+            return redirect(url_for('profile', uid=login["id"]))
+
         if chosen_person == profile["name"]:
             flash("Sorry but you cannot select yourself!")
             return redirect(url_for('profile', uid=login["id"]))

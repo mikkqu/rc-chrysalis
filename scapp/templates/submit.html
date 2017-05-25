@@ -26,19 +26,22 @@
                     placeholder="Select a person") }}
 
             <br>
+
+
             <ul id="goals_mcheckbox">
             {%  for value, label, selected in form.goals_mcheckbox.iter_choices() %}
             <li>
               {% if profile.goals[loop.index0] == 0 %}
-                <input id="goals_mcheckbox-{{ loop.index0 }}" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
+                <input id="goals_mcheckbox-{{ loop.index0 }}" class="goals_mcheckbox" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
                 <label for="goals_mcheckbox-{{ loop.index0 }}">{{ label }}</label>
               {% else %}
-                <input disabled="true" id="goals_mcheckbox-{{ loop.index0 }}" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
+                <input disabled="true" id="goals_mcheckbox-{{ loop.index0 }}" class="goals_mcheckbox" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
                 <label for="goals_mcheckbox-{{ loop.index0 }}"><s><b>{{ label }}</b></s></label>
               {% endif %}
             </li>
             {% endfor %}
             </ul>
+
 
             <datalist id="datalist">
             {% for entry in persons %}
