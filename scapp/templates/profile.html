@@ -37,7 +37,7 @@
             </h6>
 
             <p class="mb-4"><b>Level: </b>{{ profile.level }}</p>
-            <p class="mb-4">{{ profile.interests | truncate(length=180) }}</p>
+            <p class="mb-4">{% if profile.interests %}{{ profile.interests | truncate(length=180) }}{% endif %}</p>
 
             <ul class="card-menu">
               <li class="card-menu-item">
