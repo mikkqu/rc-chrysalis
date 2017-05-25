@@ -7,10 +7,10 @@ social activities at Recurse Center.
 
 The following configuration variables are used by the app.
 
-DEBUG
-SECRET_KEY
-CONSUMER_KEY
-CONSUMER_SECRET
-MONGO_URI
+DEBUG  
+SECRET_KEY  
+CONSUMER_KEY  
+CONSUMER_SECRET  
+MONGO_URI  
 
 Declare them in a config.py file for local development environment, or export as venv if you plan to use Heroku platform.
