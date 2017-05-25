@@ -222,6 +222,10 @@ label {
   margin-top: 5px;
 }
 
+.score-name {
+  color: black;
+}
+
 .score-points {
   position: relative;
   top: 10px;

@@ -16,12 +16,11 @@
             {% for user in scoreboard[:50] %}
             <li class="media list-group-item p-4">
               <h6 class="my-0 text-success score-index">#{{ loop.index }}</h6>
-              <img class="media-object d-flex align-self-start mr-3"
-                src="{{ user.profile.image }}">
+              <a href="{{ url_for('profile', uid=user._id) }}"><img class="media-object d-flex align-self-start mr-3" src="{{ user.profile.image }}"></a>
               <div class="media-body">
                 <div class="media-heading">
                   <small class="float-right text-muted score-points">Score: {{ user.score }}</small>
-                  <h6 class="score-level">{{ user.name }}</h6>({{ user.level }})
+                  <h6 class="score-level"><a class="score-name" href="{{ url_for('profile', uid=user._id) }}">{{ user.name }}</a></h6>({{ user.level }})
                 </div>
 
               </div>
