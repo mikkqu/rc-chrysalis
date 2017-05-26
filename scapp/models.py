@@ -44,7 +44,6 @@ worktypes = [
 def get_level_by_score(score):
     for i, level in enumerate(levels):
         upper_bound = len(goals) * i / (len(levels) - 1)
-        print("i {} ub {}".format(i, upper_bound))
 
         if score <= upper_bound:
             return level
