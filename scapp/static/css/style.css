@@ -245,6 +245,56 @@ textarea {
   border-color: #CCCCCC;
 }
 
+/* Entypo font */
+
+@font-face {
+  font-family: "toolkit-entypo";
+  src: url("../fonts/toolkit-entypo.eot");
+  src: url("../fonts/toolkit-entypo.eot?#iefix") format("eot"), url("../fonts/toolkit-entypo.woff2") format("woff2"), url("../fonts/toolkit-entypo.woff") format("woff"), url("../fonts/toolkit-entypo.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon:before {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  font-family: "toolkit-entypo";
+  speak: none;
+  font-size: 100%;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-location-pin:before {
+  content: "\EAE7";
+}
+
+.icon-briefcase:before {
+  content: "\EA36";
+}
+
+.icon-github:before {
+  content: "\EAB4";
+}
+
+.icon-twitter:before {
+  content: "\EB7E";
+}
+
+.icon-arrow-right:before {
+  content: "\EA1E";
+}
+
+.icon-arrow-left:before {
+  content: "\EA19";
+}
+
 /* Container */
 
 .container {
