@@ -12,7 +12,10 @@ def init_from_me(d):
     profile["batch_id"] = d["batch_id"]
     profile["_id"] = d["id"]
 
-    profile["location"] = d["current_location"]["ascii_name"]
+    if d["current_location"] is None or d["current_location"]["ascii_name"] is None:
+        profile["location"] = "Not specified"
+    else:
+        profile["location"] = d["current_location"]["ascii_name"]
     profile["email"] = d["email"]
     profile["job"] = d["job"]
     profile["github"] = d["github"]
