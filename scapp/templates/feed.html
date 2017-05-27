@@ -13,7 +13,7 @@
         <ul class="list-group media-list media-list-stream mb-4">
 
           {% if events %}
-            {% for event in events[:20] | reverse %}
+            {% for event in events | reverse %}
             <li class="media list-group-item p-4">
               <a class="score-name" href="{{ url_for('profile', uid=event.source_profile._id) }}">
                 <img class="media-object d-flex align-self-start mr-3" src="{{ event.source_profile.image }}">
