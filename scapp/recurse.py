@@ -64,7 +64,7 @@ def get():
     return recursers
 
 def get_by_name(name):
-    first_name, last_name = name.split()
+    first_name, last_name = name.split(' ', 1)
 
     recurser = mongo.db.recursers.find_one( {
         "$and": [ { "first_name": first_name },
