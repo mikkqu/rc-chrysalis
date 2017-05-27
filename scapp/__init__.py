@@ -10,8 +10,11 @@
 import os
 from flask import Flask
 from flask_pymongo import PyMongo
+from . import moment
 
 app = Flask(__name__, static_url_path='/static')
+app.jinja_env.globals['momentjs'] = moment.momentjs
+app.jinja_env.auto_reload = True
 
 heroku = os.getenv('IS_HEROKU', None)
 if heroku is None:

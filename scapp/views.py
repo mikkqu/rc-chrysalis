@@ -1,4 +1,5 @@
 from flask import Flask, session, url_for, flash, redirect, request, render_template
+from datetime import datetime
 
 from . import app
 from . import models
@@ -155,9 +156,11 @@ def submit(login=None):
         else:
             target_profile_id = target_profile["_id"]
 
+        submit_date = datetime.utcnow()
         event = events.init_event(events.pair,
                                   login["id"],
                                   target_profile_id,
+                                  submit_date,
                                   chosen_person,
                                   chosen_goals,
                                   chosen_worktype,

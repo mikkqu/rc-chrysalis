@@ -107,7 +107,7 @@
               </a>
               <div class="media-body">
                 <div class="">
-                  <small class="float-right text-muted">{{ loop.index }} days ago</small>
+                  <small class="float-right text-muted">{{ momentjs(event.date).fromNow() }}</small>
                   <h6><a class="score-name" href="{{ url_for('profile', uid=profile._id) }}">{{ event.source_profile.name }}</a></h6>
                 </div>
                 <p>
