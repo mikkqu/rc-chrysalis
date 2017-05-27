@@ -6,6 +6,7 @@ from . import profiles
 from . import forms
 from . import recurse
 from . import events
+from . import heroku
 
 from .oauth import auth, get_login, login_required
 
@@ -48,7 +49,13 @@ def login():
         return redirect(request.referrer or url_for('profile'))
     else:
         afterward = request.args.get('return_url') or request.referrer or None
-        landing = url_for('oauth_authorized', return_url=afterward, _external=True)
+
+        if heroku is not None:
+            landing = url_for('oauth_authorized', return_url=afterward, _scheme='https', _external=True)
+            landing = landing.replace('https://rc-chrysalis.herokuapp.com', 'https://chrysalis.recurse.com', 1)
+        else:
+            landing = url_for('oauth_authorized', return_url=afterward, _external=True)
+
         return auth.authorize(callback=landing)
 
 
@@ -244,11 +251,3 @@ def update_batches(login=None):
 
     flash("Batch info was updated! Persons fetched: {}".format(len(recursers)))
     return redirect(url_for('profile', uid=login["id"]))
-
-
-@app.before_request
-def before_request():
-    if request.url.startswith('https://'):
-        url = request.url.replace('https://', 'http://', 1)
-        code = 301
-        return redirect(url, code=code)
