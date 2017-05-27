@@ -36,7 +36,12 @@ def get_events(uid=None):
     query = {}
 
     if uid is not None:
-        query = {"source_profile._id": uid}
+        query = {
+            "$or": [
+                {"source_profile._id": uid},
+                {"target_profile._id": uid}
+            ]
+        }
 
     entries = mongo.db.events.find(query)
     entries = list(entries)

@@ -102,13 +102,13 @@
           {% if events %}
             {% for event in events[:20] | reverse %}
             <li class="media list-group-item p-4">
-              <a href="{{ url_for('profile', uid=profile._id) }}">
+              <a href="{{ url_for('profile', uid=event.source_profile._id) }}">
                 <img class="media-object d-flex align-self-start mr-3" src="{{ event.source_profile.image }}">
               </a>
               <div class="media-body">
                 <div class="">
                   <small class="float-right text-muted">{{ momentjs(event.date).fromNow() }}</small>
-                  <h6><a class="score-name" href="{{ url_for('profile', uid=profile._id) }}">{{ event.source_profile.name }}</a></h6>
+                  <h6><a class="score-name" href="{{ url_for('profile', uid=event.source_profile._id) }}">{{ event.source_profile.name }}</a></h6>
                 </div>
                 <p>
                   {% if event.work_type == '0' %} Worked {% else %} Paired {% endif %} together with
