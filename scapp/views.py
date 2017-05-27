@@ -101,6 +101,8 @@ def profile(uid=None, login=None):
         event["goals_list"] = ["%s" % models.goals[int(id)] for id in event["goals_list"]]
         event["target_profile"] = profiles.get_profile_by_name(event["target_name"])
 
+    profile["rating"] = len(event_list)
+
     return render_template('profile.html', login=login,
                                            profile=profile,
                                            goals=models.goals,

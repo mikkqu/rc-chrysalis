@@ -42,8 +42,19 @@
             <ul class="card-menu">
               <li class="card-menu-item">
                 <a href="" class="text-inherit" data-toggle="modal">
+                  Rating
+                  {% if profile.rating != 0 %}
+                  <h6 class="my-0 text-success">{{ profile.rating }}</h6>
+                  {% else %}
+                  <h6 class="my-0 text-danger">{{ profile.rating }}</h6>
+                  {% endif %}
+                </a>
+              </li>
+
+              <li class="card-menu-item">
+                <a href="" class="text-inherit" data-toggle="modal">
                   Score
-                  {% if profile.position < 4 %}
+                  {% if profile.score != 0 %}
                   <h6 class="my-0 text-success">{{ profile.score }}</h6>
                   {% else %}
                   <h6 class="my-0 text-danger">{{ profile.score }}</h6>
@@ -54,11 +65,7 @@
               <li class="card-menu-item">
                 <a href="" class="text-inherit" data-toggle="modal">
                   Place
-                  {% if profile.position < 4 %}
                   <h6 class="my-0 text-success">#{{ profile.position }}</h6>
-                  {% else %}
-                  <h6 class="my-0 text-danger">#{{ profile.position }}</h6>
-                  {% endif %}
                 </a>
               </li>
             </ul>

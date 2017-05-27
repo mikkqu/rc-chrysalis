@@ -33,10 +33,10 @@
             <li>
               {% if profile.goals[loop.index0] == 0 %}
                 <input id="goals_mcheckbox-{{ loop.index0 }}" class="goals_mcheckbox" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
-                <label for="goals_mcheckbox-{{ loop.index0 }}">{{ label }}</label>
+                <label for="goals_mcheckbox-{{ loop.index0 }}"><b>{{ label }}</b></label>
               {% else %}
-                <input disabled="true" id="goals_mcheckbox-{{ loop.index0 }}" class="goals_mcheckbox" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
-                <label for="goals_mcheckbox-{{ loop.index0 }}"><s><b>{{ label }}</b></s></label>
+                <input id="goals_mcheckbox-{{ loop.index0 }}" class="goals_mcheckbox" name="goals_mcheckbox" type="checkbox" value="{{ loop.index0 }}">
+                <label for="goals_mcheckbox-{{ loop.index0 }}">{{ label }}</label>
               {% endif %}
             </li>
             {% endfor %}
