@@ -100,6 +100,7 @@ def profile(uid=None, login=None):
     for event in event_list:
         event["goals_list"] = ["%s" % models.goals[int(id)] for id in event["goals_list"]]
         event["target_profile"] = profiles.get_profile_by_name(event["target_name"])
+        event["recurse_profile"] = recurse.get_by_name(event["target_name"])
 
     profile["rating"] = len(event_list)
 
@@ -217,17 +218,17 @@ def feed(login=None):
                                         events=event_list)
 
 
-@app.route('/invite/<string:name>/')
+@app.route('/invite', methods=["GET", "POST"])
 @login_required
-def invite(name=None, login=None):
+def invite(login=None):
     recurse.fetch_batches_if_outdated()
 
-    profile = recurse.get_by_name(name)
+    email = request.form.get("email")
+    text = request.form.get("message")
 
-    return '<h1>This module is in development phase</h1>' \
-           '<h3>Recognize him? This user has not registered yet.</h3>' \
-           '<img src="{}">' \
-           '<h3>Tell him to join in! <a href="mailto:{}">{}</a></h3>'.format(profile["image"], profile["email"], profile["email"])
+    return '<h1>sendmail module is not implemented yet</h1>' \
+           '<h3>Message to email: {} suppose to be sent with the following text: </h3>' \
+           '<h3>{}</h3>'.format(email, text)
 
 
 @app.route('/unsubmit/<string:eid>/')

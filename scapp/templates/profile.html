@@ -124,7 +124,7 @@
                         <b>{{ event.target_name }}</b>
                       </a>
                     {% else %}
-                      <a href="{{ url_for('invite', name=event.target_name) }}" class="text-danger">
+                      <a href="{{ url_for('invite', name=event.target_name) }}" class="text-danger" data-toggle="modal" data-target="#modal{{ loop.index }}">
                         <b>{{ event.target_name }}</b>
                       </a>
                     {% endif %}
@@ -139,6 +139,36 @@
                     {%- endfor -%}
                   . {{ event.details }}
                 </p>
+
+                <div id="modal{{ loop.index }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                          <form action="invite" name="invite-form" method="post">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">{{ event.target_name }} is not playing yet!</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p class="text-center">Does that face look familiar?</p>
+                              <img class="rounded-circle mx-auto d-block" src="{{ event.recurse_profile["image"] }}">
+                              <div class="form-group">
+                                <label for="email" class="control-label">Recipient:</label>
+                                <input type="text" class="form-control" name="email" id="email" value="{{ event.recurse_profile["email"] }}">
+                              </div>
+                              <div class="form-group">
+                                <label for="message" class="control-label">Message:</label>
+                                <textarea class="form-control" name="message" id="message">Hi! Check out this app: http://recurse.chrysalis.com!</textarea>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn btn-success">Send</button>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                            </form>
+                          </div>
+                        </div>
+                </div>
+
                 <small class="float-right text-muted delete-link">
                   <a class="text-inherit" href="{{ url_for('unsubmit', eid=event._id) }}"><u>Delete</u></a>
                 </small>
