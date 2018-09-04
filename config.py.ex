@@ -1,0 +1,5 @@
+DEBUG="true"
+SECRET_KEY=""
+CONSUMER_KEY=""
+CONSUMER_SECRET=""
+MONGO_URI="mongodb://localhost:27017/chrysalis"
